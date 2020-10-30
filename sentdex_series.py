@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 import os
 
-dire = '/home/kuba/Windows_Old_Staff/files'
+dire = '/dire location'
 os.chdir(dire)
 
 %matplotlib inline
