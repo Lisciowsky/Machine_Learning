@@ -2,10 +2,12 @@ from django.shortcuts import render, get_object_or_404
 from .models import Post, Comment
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView
-from .forms import EmailPostForm, CommentForm
+from .forms import EmailPostForm, CommentForm, SearchForm
 from django.core.mail import send_mail
 from taggit.models import Tag
 from django.db.models import Count
+from django.contrib.postgres.search import SearchVector
+
 
 ''' def post_list(request):
     object_list = Post.published.all()
@@ -121,3 +123,16 @@ def post_list(request, tag_slug=None):
         # If page is out of range deliver first Page
         posts = paginator.page(paginator.num_pages)
     return render(request, 'blog/post/list.html', {'page': page, 'posts': posts, 'tag': tag})
+
+def post_search(request):
+    form = SearchForm()
+    query = None
+    results = []
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            results = Post.published.annotate(search = SearchVector('title', 'body'),).filter(search=query)
+            
+    return render(request, 'blog/post/search.html',
+                 {'form': form, 'query': query, 'results': results})

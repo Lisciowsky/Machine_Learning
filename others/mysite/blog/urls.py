@@ -1,7 +1,9 @@
 from django.urls import path
 from . import views
 from django.contrib.sitemaps.views import sitemap
-from blog.sitemaps import PostSitemap
+from . templates.blog.sitemaps import PostSitemap
+from . templates.blog.feeds import LatestPostFeed 
+
 
 sitemaps = {
     'posts': PostSitemap
@@ -20,5 +22,7 @@ urlpatterns = [
     name = 'post_detail'),
     path('<int:post_id>/share/', views.post_share, name = 'post_share'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
-    name = 'django.contrib.sitemaps.views.sitemap')
+    name = 'django.contrib.sitemaps.views.sitemap'),
+    path('feed/', LatestPostFeed(), name = 'post_feed'),
+    path('search/', views.post_search, name = 'post_search'),
 ]
