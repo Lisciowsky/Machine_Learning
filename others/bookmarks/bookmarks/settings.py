@@ -35,6 +35,13 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+#added Page 130
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'account.authentication.EmailAuthBackend',
+    'social_core.backends.facebook.FacebookOAuth2',
+]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -45,6 +52,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +140,6 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 #MEDIA_ROOT is the local file where the uploaded files reside.
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+#PAGE 132 social media login
+ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
